@@ -1,33 +1,18 @@
 version: "3.8"
 
 services:
-  
+
   frontend:
     build: ./frontend
     container_name: frontend
     ports:
       - 80:80
-    environment: 
+    environment:
       - KEYCLOAK_URL=http://keycloak:8080
       - KEYCLOAK_REALM=test
       - KEYCLOAK_CLIENT_ID=frontend
-      - BACKEND_BASE_PATH=http://backend:9000
     depends_on:
       - keycloak
-      - backend
-    
-  backend:
-    build: ./backend
-    container_name: backend
-    ports:
-      - 9000:9000
-    environment: 
-      - APP_NAME=movies-app
-      - KEYCLOAK_URL=http://keycloak:8080
-      - KEYCLOAK_REALM=test
-    depends_on:
-      - keycloak
-
   keycloak:
     image: jboss/keycloak:11.0.2
     container_name: keycloak
@@ -44,7 +29,7 @@ services:
       - KEYCLOAK_IMPORT=/tmp/realm-test.json
     volumes:
       - ./infra/keycloak/realm-test.json:/tmp/realm-test.json
-    command: ["-Dkeycloak.profile.feature.upload_scripts=enabled"]
+    command: [ "-Dkeycloak.profile.feature.upload_scripts=enabled" ]
     depends_on:
       - postgres
 
@@ -65,8 +50,8 @@ services:
     container_name: prometheus
     ports:
       - 5000:9090
-    volumes: 
-      - prometheus:/prometheus 
+    volumes:
+      - prometheus:/prometheus
       - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
 
   grafana:
@@ -74,7 +59,7 @@ services:
     container_name: grafana
     ports:
       - 3000:3000
-    environment: 
+    environment:
       - PROMETHEUS_URL=http://prometheus:9090
       - DS_PROMETHEUS=prometheus
     volumes:
