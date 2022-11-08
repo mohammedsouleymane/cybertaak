@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guard/auth.guard';
-import { ContentComponent } from './component/content/content.component';
 import { BoardComponent } from './board/board.component';
 import { CreateStoryComponent } from './create-story/create-story.component';
 
